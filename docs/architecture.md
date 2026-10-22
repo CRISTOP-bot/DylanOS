@@ -15,7 +15,8 @@ propio `dylanos-installer`.
 - `configs/plasma/skel`: valores iniciales para nuevos usuarios, sin sobrescribir
   la configuración de usuarios existentes.
 - `scripts/stage.py`: instala únicamente el payload de DylanOS en un directorio
-  explícito. Se puede ejecutar sin root para validar el contenido de la imagen.
+  explícito. Se puede ejecutar sin root para validar el contenido de la imagen; en ese modo
+conserva el propietario actual, y en builds con root asigna el home live al UID 1000.
 - `scripts/build-installer.sh`: genera el bundle real React/Vite del instalador
   (`dist/`) desde `package-lock.json`, necesario antes de hacer staging.
 - `scripts/build.sh`: debootstrap firmado, repositorios, paquetes, staging,
