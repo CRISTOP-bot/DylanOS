@@ -75,8 +75,15 @@ class ExplorerStructureTest(unittest.TestCase):
         # el informe debe ser honesto sobre lo pendiente
         self.assertTrue("Pendiente" in readme or "pendiente" in readme)
 
-    def test_reference_prototype_preserved(self):
-        self.assertTrue((ROOT / "previews/DylanOS explorer/DylanOS Explorer.zip").exists())
+    def test_reference_previews_preserved(self):
+        # These are the design references actually tracked in the repository;
+        # no prototype ZIP is present in the branch history.
+        previews = ROOT / "previews/DylanOS explorer"
+        for name in ("explorer.png", "explorer-home.png", "explorer-dir.png"):
+            with self.subTest(preview=name):
+                path = previews / name
+                self.assertTrue(path.is_file(), f"Falta la captura de referencia: {path}")
+                self.assertGreater(path.stat().st_size, 0, f"Captura de referencia vacía: {path}")
 
 
 if __name__ == "__main__":
