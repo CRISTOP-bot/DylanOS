@@ -12,6 +12,18 @@ spec.loader.exec_module(module)
 
 
 class StagingTest(unittest.TestCase):
+    def test_installer_bundle_is_built_before_staging(self):
+        helper = (ROOT / "scripts/build-installer.sh").read_text(encoding="utf-8")
+        self.assertIn("npm ci --no-audit --no-fund", helper)
+        self.assertIn("npm run build", helper)
+        for script in ("scripts/build.sh", "scripts/check.sh"):
+            with self.subTest(script=script):
+                content = (ROOT / script).read_text(encoding="utf-8")
+                self.assertIn("scripts/build-installer.sh", content)
+                if script.endswith("build.sh"):
+                    self.assertLess(content.index("scripts/build-installer.sh"),
+                                    content.index("scripts/stage.py"))
+
     def test_refuses_host_and_repository(self):
         for path in ("/", ROOT, ROOT.parent):
             with self.assertRaises(ValueError): module.stage(path)

@@ -16,6 +16,8 @@ propio `dylanos-installer`.
   la configuración de usuarios existentes.
 - `scripts/stage.py`: instala únicamente el payload de DylanOS en un directorio
   explícito. Se puede ejecutar sin root para validar el contenido de la imagen.
+- `scripts/build-installer.sh`: genera el bundle real React/Vite del instalador
+  (`dist/`) desde `package-lock.json`, necesario antes de hacer staging.
 - `scripts/build.sh`: debootstrap firmado, repositorios, paquetes, staging,
   compilación, initramfs y manifiesto. Usa un namespace de montajes privado.
 - `scripts/iso.sh`: squashfs conservando `/boot`, kernel/initrd de igual versión,

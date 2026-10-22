@@ -3,6 +3,8 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 if [[ ${1:-} != --inside ]]; then
+    # El instalador React/Vite genera dist fuera del chroot antes del staging.
+    "$ROOT/scripts/build-installer.sh"
     exec sudo unshare --mount --propagation private bash "$0" --inside "$@"
 fi
 shift

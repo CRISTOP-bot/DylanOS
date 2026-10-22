@@ -4,7 +4,9 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 PYTHON="${DYLANOS_PYTHON:-python3}"
 while IFS= read -r script; do bash -n "$script"; done < <(find scripts packages -name '*.sh' -type f)
-shellcheck scripts/build.sh scripts/iso.sh scripts/test.sh scripts/check.sh scripts/lib/packages.sh packages/development/setup-repos.sh
+shellcheck scripts/build.sh scripts/build-installer.sh scripts/iso.sh scripts/test.sh scripts/check.sh scripts/lib/packages.sh packages/development/setup-repos.sh
+# Genera el frontend real que stage.py instala en la imagen y que test_staging valida.
+"$ROOT/scripts/build-installer.sh"
 bash scripts/tests/test_packages.sh
 # Cada módulo de unittest corre en su propio proceso: las suites QML
 # (workspace, app-center) comparten un solo QApplication y mezclarlas en un
