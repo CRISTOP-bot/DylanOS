@@ -11,14 +11,16 @@ PlasmoidItem {
     // sobrara panel; el elidrado es el último recurso, no el primero.
     Layout.fillWidth: true
     Layout.fillHeight: true
-    Layout.minimumWidth: 24
-    Layout.maximumWidth: 4096
-    Layout.preferredWidth: Math.min(contentRow.implicitWidth + 16, 4096)
+    // Reserve suficiente espacio para títulos como «DylanOS Installer»;
+    // 24 px dejaba visible únicamente el inicio del nombre en el panel.
+    Layout.minimumWidth: 192
+    Layout.maximumWidth: 640
+    Layout.preferredWidth: Math.max(192, Math.min(contentRow.implicitWidth + 16, 640))
 
     preferredRepresentation: fullRepresentation
     fullRepresentation: Item {
         id: container
-        implicitWidth: contentRow.implicitWidth + 16
+        implicitWidth: Math.max(192, Math.min(contentRow.implicitWidth + 16, 640))
         implicitHeight: parent ? parent.height : 30
         // El título nunca se pinta fuera del applet mientras el panel
         // redimensiona: sin esto el texto se cruza con el menú de la app.
@@ -35,6 +37,7 @@ PlasmoidItem {
             id: contentRow
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
+            anchors.right: parent.right
             anchors.leftMargin: 8
             anchors.rightMargin: 8
             spacing: 0
