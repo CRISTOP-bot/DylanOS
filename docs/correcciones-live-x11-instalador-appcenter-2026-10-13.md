@@ -208,3 +208,20 @@ sigue disponible con el botón «Cancelar» de cada pantalla.
 - `scripts/tests/test_desktop.py` → las 6 apps fijadas del dock, en orden y
   sin extras (`pins.length === 6`).
 - `scripts/tests/test_app_center.py` → `Icon=dylanos-app-center`.
+
+
+### 7.7 Ronda 3 (21-oct): título completo de la app activa
+
+La captura volvió a mostrar el nombre de la aplicación activa recortado a «Dy».
+En `apps/com.dylanos.activeapp/contents/ui/main.qml`, el applet podía reducirse
+a 24 px aunque el título necesitara más espacio. Se ajustó el ancho para que:
+
+- `Layout.minimumWidth` reserve 192 px y `Layout.preferredWidth` use el ancho
+  medido del contenido, limitado a 640 px.
+- El `RowLayout` quede anclado a los lados izquierdo y derecho del widget; así,
+  la etiqueta con `Layout.fillWidth` recibe el ancho disponible.
+- El texto conserve el elidido a la derecha como último recurso, en vez de
+  invadir los menús de la aplicación cuando el panel realmente no tenga espacio.
+
+El cambio corrige el tamaño del widget sin alterar el orden de elementos de la
+barra superior ni el dock.
